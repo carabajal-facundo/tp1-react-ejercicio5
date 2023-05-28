@@ -4,12 +4,18 @@ import { useState } from 'react';
 
 const Formulario = () => {
     const [tarea, setTarea] = useState('');
-    const [tareas, setTareas] = useState([]);
+    let tareas = localStorage.getItem('listaTareas');
+    if(!tareas) tareas=[];
+    else{
+        tareas = JSON.parse(tareas).map((tarea)=>tarea);
+    }
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        setTareas([...tareas, tarea]);
+        tareas.push(tarea);
+        localStorage.setItem('listaTareas', JSON.stringify(tareas));
         setTarea('');
+
     }
 
     return (
